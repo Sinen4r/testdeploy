@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask-SocketIO Test</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Flask-SocketIO Test</h1>
+  <input id="msg" placeholder="Type a message">
+  <button onclick="sendMessage()">Send</button>
+  <div id="log"></div>
+
+  <script>
+    const socket = io();
+
+    socket.on('connect', () => {
+      document.getElementById('log').innerHTML += '<p>Connected to server ✅</p>';
+    });
+
+    function sendMessage() {
+      const msg = document.getElementById('msg').value;
+      socket.send(msg);
+    }
+
+    socket.on('response', (data) => {
+      document.getElementById('log').innerHTML += `<p>${data.data}</p>`;
+    });
+  </script>
+</body>
+</html>
